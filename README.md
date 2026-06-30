@@ -16,7 +16,17 @@ Only 360K of 87.8M parameters are trainable (0.4%) — fast fine-tuning on a sin
 
 ## Results
 
-100% accuracy on held-out validation set. **Caveat:** the AI samples are exclusively from Stable Diffusion / Latent Diffusion (2022-era models). The classifier has not been tested against newer generators (Midjourney v6, DALL-E 3, Flux, SDXL) — expect lower real-world accuracy until the dataset is expanded.
+Evaluated on the AI-ArtBench **test split** (30,000 images, never seen during training or validation):
+
+| Class | Precision | Recall | F1 | Support |
+|-------|-----------|--------|----|---------|
+| AI_GENERATED | 0.9999 | 1.0000 | 1.0000 | 20,000 |
+| ORIGINAL | 1.0000 | 0.9998 | 0.9999 | 10,000 |
+| **Overall accuracy** | | | **99.99%** | 30,000 |
+
+Confusion matrix: 2 false negatives out of 30,000, 0 false positives.
+
+**Caveat:** the AI samples are exclusively from Stable Diffusion / Latent Diffusion (2022-era models). The classifier has not been tested against newer generators (Midjourney v6, DALL-E 3, Flux, SDXL) — expect lower real-world accuracy until the dataset is expanded.
 
 ## Files
 
@@ -68,7 +78,12 @@ Response:
 
 ## Model weights
 
-Trained weights (`best_model.pt`, 336MB) are not committed to this repo (too large for git). Hosted on Hugging Face Hub — see model card link in the repo description once published.
+Trained weights (`best_model.pt`, 352MB) are not committed to this repo (too large for git). Hosted on Hugging Face Hub: **[Hoang2509/artcurve-ai-detector](https://huggingface.co/Hoang2509/artcurve-ai-detector)**.
+
+```python
+from huggingface_hub import hf_hub_download
+path = hf_hub_download(repo_id="Hoang2509/artcurve-ai-detector", filename="best_model.pt")
+```
 
 ## Integration with ArtCurve
 
